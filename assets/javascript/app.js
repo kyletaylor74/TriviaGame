@@ -1,3 +1,6 @@
+
+$(document).ready(function() {
+
 const triviaQuestions = [
     {
         question: "What is Captin Americas sheild made of?",
@@ -36,3 +39,30 @@ let score = 0;
 let lost = 0;
 let timer;
 
+
+
+
+function setupQuestion() {
+
+    const question = triviaQuestions[currentQuestion].question;
+    const choices = triviaQuestions[currentQuestion].choices;
+
+    $('#time').html('Timer:' + counter);
+    $('#game').html(`
+        <h4>${question}</h4>
+        ${loadChoices(choices)}
+    `);
+}
+
+function loadChoices(choices){
+    let result = '';
+
+    for (let i = 0; i < choices.length; i++){
+        result += `<p class="choice" data-answer="${choices[i]}">${choices[i]}</p>`;
+    }
+    return result
+}
+
+
+setupQuestion()
+})
