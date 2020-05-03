@@ -43,6 +43,7 @@ function nextQuestion(){
     const isQuestionDone = (triviaQuestions.length- 1) === currentQuestion;
     if(isQuestionDone) {
         console.log('Game Over!')
+        displayResult();
     } else {
         currentQuestion++;
         setupQuestion()
@@ -94,6 +95,34 @@ function loadChoices(choices){
     }
     return result
 }
+
+$(document).on('click', '.choice', function(){
+    clearInterval(timer)
+    const selectedAnswer = $(this).attr('data-answer')
+    const correctAnswer = triviaQuestions[currentQuestion].correctAnswer;
+
+    if (correctAnswer === selectedAnswer){
+        score++;
+        nextQuestion();
+        console.log('winning');
+    } else {
+        lost++;
+        nextQuestion();
+        console.log('loser')
+    }
+})
+
+function displayResult(){
+    const result = `
+        <p> You got ${score} question(s) right</p>
+        <p> You missed ${lost} question(s) </p>
+        <p> Total questions ${triviaQuestions.length}</p>
+        <button class="btn btn-primary" id="reset"> Start over</button>
+    `;
+
+    $('#game').html(result);
+}
+
 
 
 setupQuestion()
