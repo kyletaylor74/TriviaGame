@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 const triviaQuestions = [
     {
-        question: "What is Captin Americas sheild made of?",
+        question: "What is Captain Americas shield made of?",
         choices: ["Steel","Vibranium","Iron","Calcium"],
         correctAnswer: "Vibranium"
     },
@@ -39,10 +39,42 @@ let score = 0;
 let lost = 0;
 let timer;
 
+function nextQuestion(){
+    const isQuestionDone = (triviaQuestions.length- 1) === currentQuestion;
+    if(isQuestionDone) {
+        console.log('Game Over!')
+    } else {
+        currentQuestion++;
+        setupQuestion()
+    }
+    
+}
 
+
+
+function timeUp(){
+    clearInterval(timer);
+
+    lost++;
+
+    nextQuestion();
+}
+
+
+function countDown(){
+    counter--;
+
+    $('#time').html('Timer:' + counter)
+
+    if (counter === 0) {
+        timeUp();
+    }
+}
 
 
 function setupQuestion() {
+    counter = 15;
+    timer = setInterval(countDown,1000)
 
     const question = triviaQuestions[currentQuestion].question;
     const choices = triviaQuestions[currentQuestion].choices;
